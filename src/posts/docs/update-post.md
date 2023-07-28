@@ -51,7 +51,7 @@ The request body should be in the form data format. Use the `multipart/form-data
 | Field     | Type             | Description         | Constraints                                                                                                                          |
 | --------- | ---------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | caption   | string           | Caption of the post | Optional                                                                                                                             |
-| imageFile | string ($binary) | Post's image        | Required. Has to be in a binary format data type and can only accept jpg, jpeg, png file types. The maximum size of the file is 10mb |
+| imageFile | string ($binary) | Post's image        | Optional. But if you'd like to send the image file data then it has to be in a binary format data type and can only accept jpg, jpeg, png file types. The maximum size of the file is 10mb |
 
 ## **Request Body example**.
 
