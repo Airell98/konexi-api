@@ -234,7 +234,7 @@ export class PostsController {
   @UseGuards(PostOwnerGuard)
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    type: CreatePostDto,
+    type: UpdatePostDto,
     description: 'Request body to update the post',
   })
   @ApiParam({
