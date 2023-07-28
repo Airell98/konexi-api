@@ -1,6 +1,8 @@
 import {
   CanActivate,
   ExecutionContext,
+  HttpException,
+  HttpStatus,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -9,7 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 
 import { UserDocument } from '../users/schemas/user.schema';
-import { ENV_VARIABLES } from '../constants/index';
+import { ENV_VARIABLES, ERROR_MESSAGES } from '../constants/index';
 import { UsersService } from 'src/users/users.service';
 
 declare global {
@@ -32,7 +34,10 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<Request>();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      throw new UnauthorizedException();
+      throw new HttpException(
+        ERROR_MESSAGES.UNAUTHORIZED,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     try {
       const payload: Partial<UserDocument> = await this.jwtService.verifyAsync(
@@ -47,12 +52,18 @@ export class AuthGuard implements CanActivate {
       );
 
       if (!userData) {
-        throw new UnauthorizedException();
+        throw new HttpException(
+          ERROR_MESSAGES.UNAUTHORIZED,
+          HttpStatus.UNAUTHORIZED,
+        );
       }
 
       request.user = payload;
     } catch {
-      throw new UnauthorizedException();
+      throw new HttpException(
+        ERROR_MESSAGES.UNAUTHORIZED,
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     return true;
   }

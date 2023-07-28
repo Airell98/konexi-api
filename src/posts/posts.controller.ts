@@ -19,11 +19,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from '../libs/decorators/current-user.decorator';
 import { UserDocument } from '../users/schemas/user.schema';
 import { AuthGuard } from '../auth/auth.guard';
-import {
-  CreatePostDto,
-  CreatePostResponseDto,
-  UpdatePostResponseDto,
-} from './dtos/create-post.dto';
+import { CreatePostDto, CreatePostResponseDto } from './dtos/create-post.dto';
+import { UpdatePostResponseDto, UpdatePostDto } from './dtos/update-post.dto';
 import {
   CreateCommentDto,
   CreateCommentResponseDto,
@@ -269,11 +266,11 @@ export class PostsController {
     )
     imageFile: Express.Multer.File,
     @IsValidObjectId(API_PARAMS.POST_ID) postId: string,
-    @IsValidRequestBody(CreatePostDto) createPostDto: CreatePostDto,
+    @IsValidRequestBody(UpdatePostDto) updatePostDto: UpdatePostDto,
   ) {
     const updatedPost = await this.postService.updatePost(
       postId,
-      createPostDto,
+      updatePostDto,
       imageFile,
     );
 

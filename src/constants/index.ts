@@ -30,6 +30,7 @@ export const ERROR_MESSAGES = {
     `${field} value cannot be greater than ${max}`,
   MIN_NUMBER: (field: string, min: number) =>
     `${field} value cannot be less than ${min}`,
+  UNAUTHORIZED: 'Signin to proceed',
   FORBIDDEN_MODIY: `You are not authorized to modify this data`,
   RESOURCE_NOT_FOUND: 'The requested resource was not found.',
   FAILED_LOGIN:
