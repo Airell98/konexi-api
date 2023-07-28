@@ -38,7 +38,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     if (typeof errorData === 'string') {
       switch (status) {
         case HttpStatus.NOT_FOUND:
-          errorResult.message = errorData;
+          errorResult.error = errorData;
           errorResult.statusCode = status;
           break;
         case HttpStatus.UNAUTHORIZED:
