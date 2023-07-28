@@ -127,7 +127,7 @@ export class PostsController {
     description: 'Request body to search posts',
   })
   @ApiResponse({
-    type: SearchPostsDto,
+    type: SearchPostsResponseDto,
     status: HttpStatus.OK,
   })
   async searchPosts(
@@ -235,6 +235,7 @@ export class PostsController {
 
   @Put(`/:${API_PARAMS.POST_ID}`)
   @UseGuards(PostOwnerGuard)
+  @ApiConsumes('multipart/form-data')
   @ApiBody({
     type: CreatePostDto,
     description: 'Request body to update the post',

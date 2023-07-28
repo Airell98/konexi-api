@@ -1,73 +1,132 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# RESTAPIDocs
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This a back end project for a social media platform using node js with Nest JS framework, mongodb as the storage, and AWS for storing images and deployment service. All the authentication processes in this project are handled by JWT tokens.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# API URLS
 
-## Description
+Base Url: http://13.229.71.108/api/v1
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Swagger Docs: http://13.229.71.108/swagger
 
-## Installation
+Deployment Steps: [Deployment-Steps](Deployment.md)
 
-```bash
-$ yarn install
-```
+### Auth endpoints
 
-## Running the app
+1. Create Account:
 
-```bash
-# development
-$ yarn run start
+- Endpoint: [POST /auth/signup](src/auth/docs/signup.md)
+- This endpoint allows users to create a new account in the system. Users need to provide necessary information such as username, email, name, and password.
 
-# watch mode
-$ yarn run start:dev
+2. Signin:
 
-# production mode
-$ yarn run start:prod
-```
+- Endpoint: [POST /auth/signin](src/auth/docs/signin.md)
+- Users can use this endpoint to sign in to their existing accounts. They must provide valid login credentials (username and password). The server should authenticate the user's details and respond with a token that the user can use for subsequent authenticated requests.
 
-## Test
+3. Update Profile
 
-```bash
-# unit tests
-$ yarn run test
+- Endpoint: [PUT /auth/profile](src/auth/docs/update-profile.md)
+- Users can use this endpoint to update their account profile, and also to upload their profile image. The system will store their profile image on AWS S3
 
-# e2e tests
-$ yarn run test:e2e
+4. Get Current User Profile
 
-# test coverage
-$ yarn run test:cov
-```
+- Endpoint: [GET /auth/profile/current-user](src/auth/docs/current-user-profile.md)
+- Users can use this endpoint to get their own profile.
 
-## Support
+5. Get User Profile
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Endpoint: [GET /auth/profile/{userId}](src/auth/docs/get-user-profile.md)
+- Users can use this endpoint to get other users' profile.
 
-## Stay in touch
+### Post endpoints
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. Create Post:
 
-## License
+- Endpoint: [POST /posts](src/posts/docs/create-post.md)
+- This endpoint allows users to create a new post. This endpoint allows users to create a new post. The server will store the users' image files on AWS S3.
 
-Nest is [MIT licensed](LICENSE).
+2. Update Post:
+
+- Endpoint: [PUT /posts/{postId}](src/posts/docs/update-post.md)
+- Users can use this endpoint to update their own post.
+
+3. Current User Posts:
+
+- Endpoint: [POST /posts/current-user](src/posts/docs/current-user-posts.md)
+- Users can use this endpoint to get all of their own posts.
+
+4. Get User Posts:
+
+- Endpoint: [POST /posts/user](src/posts/docs/get-user-posts.md)
+- Users can use this endpoint to get posts of a specific user.
+
+5. Search Posts:
+
+- Endpoint: [POST /posts/search](src/posts/docs/search-posts.md)
+- Users can use this endpoint to search for posts by keyword.
+
+6. Get One Post:
+
+- Endpoint: [GET /posts/{postId}](src/posts/docs/get-one-post.md)
+- Users can use this endpoint to get one post.
+
+7. Delete Post:
+
+- Endpoint: [DELETE /posts/{postId}](src/posts/docs/delete-post.md)
+- Users can use this endpoint to delete their own post.
+
+8. Like Post:
+
+- Endpoint: [POST /posts/like/{postId}](src/posts/docs/like-post.md)
+- Users can use this endpoint to like a post.
+
+9. Unlike Post:
+
+- Endpoint: [POST /posts/unlike/{postId}](src/posts/docs/unlike-post.md)
+- Users can use this endpoint to unlike a post.
+
+10. Create Comment:
+
+- Endpoint: [POST /posts/comments/{postId}](src/posts/docs/create-comment.md)
+- Users can use this endpoint to comment a post
+
+11. Delete Comment:
+
+- Endpoint: [DELETE /posts/comments/{postId}/{commentId}](src/posts/docs/delete-comment.md)
+- Users can use this endpoint to delete their comment from a post.
+
+12. Get Comments:
+
+- Endpoint: [DELETE /posts/comments/{postId}](src/posts/docs/get-comments.md)
+- Users can use this endpoint to get comments from a post.
+
+### User endpoints
+
+1. Follow User:
+
+- Endpoint: [POST /users/follow-user](src/users/docs/follow-user.md)
+- Users can use this endpoint to follow other user.
+
+2. Unfollow User:
+
+- Endpoint: [POST /users/unfollow-user](src/users/docs/unfollow-user.md)
+- Users can use this endpoint to unfollow other user.
+
+3. Current User Followers:
+
+- Endpoint: [POST /users/current-user-followers](src/users/docs/current-user-followers.md)
+- Users can use this endpoint to get their own followers.
+
+4. Current User Following:
+
+- Endpoint: [POST /users/current-user-following](src/users/docs/current-user-following.md)
+- Users can use this endpoint to get their own following.
+
+5. Get User Followers:
+
+- Endpoint: [POST /users/followers](src/users/docs/get-user-followers.md)
+- Users can use this endpoint to get other users' followers.
+
+6. Get User Following:
+
+- Endpoint: [POST /users/following](src/users/docs/get-user-following.md)
+- Users can use this endpoint to get other users' following.
