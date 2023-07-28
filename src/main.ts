@@ -1,11 +1,16 @@
-import { VersioningType, ValidationPipe } from '@nestjs/common';
+import { VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
+import { HttpExceptionFilter } from './libs/exceptions/http-exception.filter';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+    logger: ['debug', 'log', 'verbose', 'warn', 'error'],
+  });
+  app.useGlobalFilters(new HttpExceptionFilter());
   app.use('/api/health-check', (_, res) => {
     res.json({
       status: 'OK',
