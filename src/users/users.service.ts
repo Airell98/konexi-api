@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Model, Types } from 'mongoose';
+import { FlattenMaps, Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import * as bcrypt from 'bcrypt';
@@ -167,6 +167,76 @@ export class UsersService {
         id: followedUserId,
         username: followedUser.username,
       },
+    };
+  }
+
+  private async mapUsers(
+    users: (FlattenMaps<User> & {
+      _id: Types.ObjectId;
+    })[],
+  ) {
+    const result: Array<{
+      _id: string;
+      name: string;
+      username: string;
+      email: string;
+      totalFollowers: number;
+      totalFollowing: number;
+      createdAt: string;
+    }> = [];
+
+    for (const user of users) {
+      const data = {
+        _id: user._id.toString(),
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        profileImage: user.profileImage,
+        totalFollowers: user.followers.length,
+        totalFollowing: user.followers.length,
+        createdAt: user.createdAt.toISOString(),
+      };
+
+      if (user.profileImage) {
+        const imageUrl = await this.mediaService.getFileUrl(user.profileImage);
+
+        data.profileImage = imageUrl;
+      }
+
+      result.push(data);
+    }
+
+    return result;
+  }
+
+  async searchUsers(page: number, perPage: number, name: string) {
+    const query = {
+      $or: [
+        { name: { $regex: new RegExp(name, 'i') } },
+        { username: { $regex: new RegExp(name, 'i') } },
+      ],
+    };
+
+    const options = {
+      sort: { createdAt: -1 },
+      skip: (page - 1) * perPage,
+      limit: perPage,
+    };
+
+    const users = await this.userModel.find(query, {}, options).lean().exec();
+
+    const result = await this.mapUsers(users);
+
+    const totalUsers = await this.userModel.countDocuments(query).exec();
+
+    const totalPages = Math.ceil(totalUsers / perPage);
+
+    return {
+      totalUsers: totalUsers,
+      totalPages: totalPages,
+      currentPage: page,
+      perPage: perPage,
+      users: result,
     };
   }
 

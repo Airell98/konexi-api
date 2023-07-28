@@ -28,12 +28,43 @@ import {
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUserFollowingResponseDto } from './dtos/get-user-following.dto';
 import { CurrentUserFollowingResponseDto } from './dtos/current-user-following.dto';
+import {
+  SearchUsersDto,
+  SearchUsersResponseDto,
+} from './dtos/search-users.dto';
 
 @ApiTags('users')
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
+
+  @Post('/search')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  @ApiBody({
+    type: SearchUsersDto,
+    description: 'Request body to search for users by name or username',
+  })
+  @ApiResponse({
+    type: SearchUsersResponseDto,
+    status: HttpStatus.OK,
+  })
+  async searchUsers(
+    @IsValidRequestBody(SearchUsersDto) searchUsersDto: SearchUsersDto,
+  ) {
+    const users = await this.userService.searchUsers(
+      searchUsersDto.page,
+      searchUsersDto.perPage,
+      searchUsersDto.name,
+    );
+
+    return generateCommonApiResponse({
+      statusCode: HttpStatus.OK,
+      message: `Users fetch successfully`,
+      data: users,
+    });
+  }
 
   @Post('/followers')
   @HttpCode(HttpStatus.OK)

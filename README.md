@@ -101,32 +101,37 @@ Deployment Steps: [Deployment-Steps](Deployment.md)
 
 ### User endpoints
 
-1. Follow User:
+1. Search Users:
+
+- Endpoint: [POST /users/search](src/users/docs/search-users.md)
+- Users can use this endpoint to search for users by name or username
+
+2. Follow User:
 
 - Endpoint: [POST /users/follow-user](src/users/docs/follow-user.md)
 - Users can use this endpoint to follow other user.
 
-2. Unfollow User:
+3. Unfollow User:
 
 - Endpoint: [POST /users/unfollow-user](src/users/docs/unfollow-user.md)
 - Users can use this endpoint to unfollow other user.
 
-3. Current User Followers:
+4. Current User Followers:
 
 - Endpoint: [POST /users/current-user-followers](src/users/docs/current-user-followers.md)
 - Users can use this endpoint to get their own followers.
 
-4. Current User Following:
+5. Current User Following:
 
 - Endpoint: [POST /users/current-user-following](src/users/docs/current-user-following.md)
 - Users can use this endpoint to get their own following.
 
-5. Get User Followers:
+6. Get User Followers:
 
 - Endpoint: [POST /users/followers](src/users/docs/get-user-followers.md)
 - Users can use this endpoint to get other users' followers.
 
-6. Get User Following:
+7. Get User Following:
 
 - Endpoint: [POST /users/following](src/users/docs/get-user-following.md)
 - Users can use this endpoint to get other users' following.
