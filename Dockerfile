@@ -1,0 +1,31 @@
+FROM node:16-alpine 
+
+
+
+ARG S3_SECRET_ACCESS_KEY
+ARG S3_ACCESS_KEY
+
+
+ENV S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY}
+ENV S3_ACCESS_KEY=${S3_ACCESS_KEY}
+
+ENV APP_HOME=/usr/src/app
+
+WORKDIR $APP_HOME
+
+
+COPY package.json $APP_HOME
+RUN yarn install
+
+
+COPY . $APP_HOME
+
+RUN yarn build
+
+EXPOSE 3000
+
+CMD ["yarn", "start"]
+
+
+
+

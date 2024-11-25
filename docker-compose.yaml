@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  app:
+    image: konexi-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - SECRET_KEY={YOUR_SECRET_KEY}
+      - S3_BUCKET_REGION={YOUR_S3_BUCKET_REGION}
+      - MONGODB_URI={YOUR_MONGODB_URI}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo-db
+    
+  mongo-db:
+    image: mongo
+    volumes:
+      - db-data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  db-data:
