@@ -1,6 +1,6 @@
 # REST API Docs
 
-This a back end project for a social media platform using node js with Nest JS framework, mongodb as the storage, and AWS for storing images and deployment service. All the authentication processes in this project are handled by JWT tokens.
+This is a back end project for a social media platform using node js with Nest JS framework, mongodb as the storage, and AWS for storing images and deployment service. All the authentication processes in this project are handled by JWT tokens.
 
 # API URLS
 
