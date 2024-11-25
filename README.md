@@ -1,12 +1,12 @@
-# RESTAPIDocs
+# REST API Docs
 
 This a back end project for a social media platform using node js with Nest JS framework, mongodb as the storage, and AWS for storing images and deployment service. All the authentication processes in this project are handled by JWT tokens.
 
 # API URLS
 
-Base Url: http://13.229.71.108/api/v1
+Base Url: {host}/api/v1
 
-Swagger Docs: http://13.229.71.108/swagger
+Swagger Docs: {host}/swagger
 
 Deployment Steps: [Deployment-Steps](Deployment.md)
 
